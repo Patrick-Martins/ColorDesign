@@ -8,11 +8,53 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <input type="color" class="color_input" value="#ffffff" />
-      <p class="hex">HEX:</p>
-      <p class="rgb">RGB:</p>
-      <p class="hsl">HSL:</p>
+    <label for="color">Select color: </label><input type="color" class="color_input" value="#ffffff" />
+
+    <select name="select" id="options">
+      <option value="analogous" selected="true">Analogous</option>
+      <option value="monochromatic">Monochromatic</option>
+      <option value="triad">Triad</option>
+      <option value="complementary">Complementary</option>
+      <option value="compound">Compound</option>
+      <option value="shades">Shades</option>
+    </select>
+
+    <div class="colors_container">
+      <div class="color_div">
+        <div class="text_container">
+          <p class="hex">HEX:</p>
+          <p class="rgb">RGB:</p>
+          <p class="hsl">HSL:</p>
+        </div>
+      </div>
+      <div class="color_div">
+        <div class="text_container">
+          <p class="hex">HEX:</p>
+          <p class="rgb">RGB:</p>
+          <p class="hsl">HSL:</p>
+        </div>
+      </div>
+      <div id="color_base">
+        <div class="text_container">
+          <p class="hex">HEX:</p>
+          <p class="rgb">RGB:</p>
+          <p class="hsl">HSL:</p>
+        </div>
+      </div>
+      <div class="color_div">
+        <div class="text_container">
+          <p class="hex">HEX:</p>
+          <p class="rgb">RGB:</p>
+          <p class="hsl">HSL:</p>
+        </div>
+      </div>
+      <div class="color_div">
+        <div class="text_container">
+          <p class="hex">HEX:</p>
+          <p class="rgb">RGB:</p>
+          <p class="hsl">HSL:</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
