@@ -6,7 +6,7 @@ let hexInput;
 const baseDiv = document.getElementById("color_base");
 
 //create an array to store all the different objects(which are colors) with hex, rgb, and hsl objects inside
-const colorsArray = [];
+let colorsArray = [];
 
 //create an object to store all the color codes fora color
 const rgb = { red: "", green: "", blue: "" };
@@ -24,6 +24,8 @@ function init() {
 }
 
 function showColorAndConvert() {
+  colorsArray = [];
+
   hexInput = document.querySelector(".color_input").value;
 
   //for the base object which is colorPrototype get rgb and hsl values--------------------
@@ -33,24 +35,20 @@ function showColorAndConvert() {
   //add the base color object to the first element of the colors array
   colorsArray.push(colorPrototype);
 
-  let baseColorHSL = colorsArray[0].hsl;
+  const baseColorHSL = colorsArray[0].hsl;
 
   //show color values for the base color
   document.querySelector("#color_base > .text_container > .hex").textContent = `HEX: ${hexInput}`;
   document.querySelector("#color_base > .text_container > .rgb").textContent = `RGB: ${rgb.red}, ${rgb.green}, ${rgb.blue}`;
   document.querySelector("#color_base > .text_container > .hsl").textContent = `HSL: ${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
 
-  // index cannot be 4 because there are only 4 divs that need to be changed based on the base color-------------------------------------------
-  for (let index = 0; index < 4; index++) {
-    let newColor;
-    //create a new object based on the prototype
-    if (colorsArray.length < 5) {
-      newColor = Object.create(colorPrototype);
-    } else {
-      //CHANGE EACH ELEMENT OF ARRAY
-      //index+1 because the first element of the colorsArray is always the base color
-      newColor = colorsArray[index + 1];
-    }
+  // the last 4 elements of the array change, which are the 4 divs that change -------------------------------------------
+  // for (let index = 1; index < 5; index++) {
+
+  document.querySelectorAll(".color_div").forEach((element, index) => {
+    //color=object inside array
+    let newColor = Object.create(colorPrototype);
+    // console.log("INITIAL H" + newColor.hsl.h);
 
     //if conditions depending on choice
     if (selectElement.options[selectElement.selectedIndex].value == "analogous") {
@@ -67,26 +65,22 @@ function showColorAndConvert() {
     } else if (selectElement.options[selectElement.selectedIndex].value == "shades") {
       shadesChoice(baseColorHSL, newColor, index);
     }
-
     convertHSLToRGB(newColor);
 
-    //add color to array
-    if (colorsArray.length < 5) {
-      colorsArray.push(newColor);
-    } else {
-      //index+1 because the first element of the colorsArray is always the base color
-      colorsArray[index + 1] = newColor;
-    }
-  }
+    const rgbObject = newColor.rgb;
+    showBackgroundColor(element, `rgb(${rgbObject.red}, ${rgbObject.green}, ${rgbObject.blue})`);
+    showValues(element, newColor);
+
+    // console.log("FINAL H" + newColor.hsl.h);
+    // console.log("BASE COLOR IS NOW" + baseColorHSL.h);
+  });
 
   //show what is inside the colorsArray
-  for (let i = 1; i < colorsArray.length; i++) {
-    document.querySelectorAll(".color_div").forEach((element, index) => {
-      const rgbObject = colorsArray[i].rgb;
-      showBackgroundColor(element, `rgb(${rgbObject.red}, ${rgbObject.green}, ${rgbObject.blue})`);
-      showValues(element, colorsArray[i]);
-    });
-  }
+  // document.querySelectorAll(".color_div").forEach((element, index) => {
+  //   const rgbObject = colorsArray[index + 1].rgb;
+  //   showBackgroundColor(element, `rgb(${rgbObject.red}, ${rgbObject.green}, ${rgbObject.blue})`);
+  //   showValues(element, colorsArray[index + 1]);
+  // });
 }
 
 function showBackgroundColor(element, color) {
@@ -180,6 +174,8 @@ function convertHSLToRGB(anObject) {
   anObject.rgb.red = Math.round(r * 255);
   anObject.rgb.green = Math.round(g * 255);
   anObject.rgb.blue = Math.round(b * 255);
+
+  console.log("Funtion!!!!");
 
   // return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
